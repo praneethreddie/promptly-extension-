@@ -1,88 +1,140 @@
-# Promptly
 
-**Optimize your prompts with AI.**
+<div align="center">
+  <img src="icon.png" alt="Promptly Logo" width="120" height="120">
+  <h1>Promptly</h1>
+  <h3>Turn vague ideas into powerful prompts with one click.</h3>
 
-Promptly is a powerful browser extension designed to help you write better prompts for Advanced LLMs. It integrates directly into the chat interfaces of **ChatGPT**, **Claude**, and **Gemini**, allowing you to optimize your prompts with a single click.
-
-## Features
-
--   **Deep Integration**: Adds an "Optimize" button directly into the text input area of popular AI chat platforms.
--   **Multi-Provider Support**: Choose your preferred AI backend to power the optimization:
-    -   Google Gemini
-    -   Anthropic Claude
-    -   OpenAI (GPT-3.5/4)
-    -   Custom API Endpoint (compatible with OpenAI format)
-    -   Default (Free OpenRouter tier)
--   **Privacy Focused**: API keys are stored locally in your browser and never sent to our servers.
--   **Customizable**: Use your own API keys for full control.
-
-## Installation
-
-Since this extension is in development/local mode, you can install it via Chrome's Developer Mode:
-
-1.  **Download/Clone** this repository to your local machine.
-2.  Open Google Chrome and navigate to `chrome://extensions`.
-3.  Toggle **Developer mode** on (top right corner switch).
-4.  Click the **Load unpacked** button (top left).
-5.  Select the folder where you saved this project (the folder containing `manifest.json`).
-6.  The "Promptly" extension should now appear in your list.
-
-## Configuration
-
-Before using the extension, you need to configure it with an AI provider:
-
-1.  Click the **Promptly icon** in your browser's toolbar (puzzle piece icon -> Promptly).
-2.  In the popup window:
-    -   Select your **AI Provider** from the dropdown.
-    -   Enter the corresponding **API Key** (e.g., your Gemini API key).
-    -   *Optional*: For "Custom Endpoint", enter your custom URL and Model name.
-3.  Click **Save Settings**.
-
-## Usage
-
-1.  Navigate to one of the supported platforms:
-    -   [ChatGPT](https://chatgpt.com)
-    -   [Claude](https://claude.ai)
-    -   [Gemini](https://gemini.google.com)
-2.  Type your rough idea or draft prompt into the chat box.
-3.  Look for the **"Lightbulb" icon** button (usually next to the submit button).
-4.  Click the button. The extension will process your text and replace it with a structured, detailed, and optimized version of your prompt.
-5.  Review the optimized prompt and hit send!
-
-## Developer Guide
-
-### Project Structure
-
--   `manifest.json`: Configuration file defining permissions, scripts, and extension metadata (Manifest V3).
--   `background.js`: Service worker that handles API calls to AI providers to avoid CORS issues and manage secrets secure usage.
--   `content.js`: Content script specifically for **ChatGPT**.
--   `claude-content.js`: Content script for **Claude**.
--   `gemini-content.js`: Content script for **Gemini**.
--   `popup.html` / `popup.js`: The settings UI handling provider selection and API key storage.
-
-### How to Add a New API Provider
-
-To extend functionality to a new AI provider, follow these steps:
-
-1.  **Update `manifest.json`**:
-    -   Add the new API's domain to `host_permissions` to allow the background script to fetch data.
-    -   Add the domain to `connect-src` in `content_security_policy` if required.
-
-2.  **Update User Interface**:
-    -   In `popup.html`, add a new `<option>` to the `#provider` select element.
-    -   In `popup.js`, add logic to show/hide the input field for the new provider's API key.
-
-3.  **Implement Logic in `background.js`**:
-    -   In `handleOptimizePrompt()`, add a `case` for your new provider.
-    -   Create a new async function (e.g., `callNewProvider(apiKey, prompt)`) that handles the `fetch` request to the API.
-    -   Ensure the response is parsed correctly and just the text content is returned.
-
-## Technologies Used
-
--   **Frontend**: HTML, CSS, Vanilla JavaScript (no frameworks required).
--   **Extension API**: Chrome Extension Manifest V3.
--   **Backend**: None (Serverless architecture; runs entirely client-side interacting directly with public APIs).
+  <p>
+    <a href="https://github.com/praneethreddie/promptly-extension-/blob/main/LICENSE">
+      <img src="https://img.shields.io/github/license/praneethreddie/promptly-extension-?style=flat-square" alt="License">
+    </a>
+    <a href="https://github.com/praneethreddie/promptly-extension-/issues">
+      <img src="https://img.shields.io/github/issues/praneethreddie/promptly-extension-?style=flat-square" alt="Issues">
+    </a>
+    <a href="https://github.com/praneethreddie/promptly-extension-/stargazers">
+      <img src="https://img.shields.io/github/stars/praneethreddie/promptly-extension-?style=flat-square" alt="Stars">
+    </a>
+    <br />
+    <a href="#features">Features</a> •
+    <a href="#installation">Installation</a> •
+    <a href="#configuration">Configuration</a> •
+    <a href="#usage">Usage</a> •
+    <a href="#development">Development</a>
+  </p>
+</div>
 
 ---
 
-*Verified locally on Windows environment.*
+## 🚀 About The Project
+
+**Promptly** is your AI-powered companion for prompting. It seamlessly integrates into **ChatGPT**, **Claude**, and **Gemini**, allowing you to transform simple, one-line requests into highly structured, context-rich prompts that unlock the full potential of Large Language Models (LLMs).
+
+Stop wasting time iterating on "meh" outputs. Get it right the first time.
+
+## ✨ Features
+
+-   **⚡ Seamless Integration**: Adds a native-feeling "Optimize" button directly inside the chat input box.
+-   **🤖 Multi-LLM Support**: Works out of the box with:
+    -   **Google Gemini**
+    -   **Anthropic Claude**
+    -   **OpenAI (ChatGPT)**
+    -   **Custom API Endpoints**
+-   **🔒 Privacy First**: Your API keys are stored extensively in your *local browser storage*. No intermediate servers. No data logging.
+-   **🛠 Highly Configurable**: Choose which AI model optimizes your prompts. Use your own keys or the included free tier (via OpenRouter).
+-   **🎨 Intelligent UI**: Animated feedback, tooltips, and non-intrusive design that respects the host site's aesthetics.
+
+## 📦 Installation
+
+Since Promptly is currently in **Developer Preview**, you can install it manually in less than a minute.
+
+1.  **Clone the Repository**
+    ```sh
+    git clone https://github.com/praneethreddie/promptly-extension-.git
+    ```
+    *Or download the [ZIP file](https://github.com/praneethreddie/promptly-extension-/archive/refs/heads/main.zip) and extract it.*
+
+2.  **Open Chrome Extensions**
+    -   Navigate to `chrome://extensions/` in your address bar.
+
+3.  **Enable Developer Mode**
+    -   Toggle the switch in the top-right corner to **ON**.
+
+4.  **Load Unpacked Extension**
+    -   Click the **"Load unpacked"** button (top-left).
+    -   Select the folder where you cloned/extracted the project.
+
+🎉 **Success!** You should now see the Promptly icon in your browser toolbar.
+
+## ⚙️ Configuration
+
+Before creating magic, you need to tell Promptly which brain to use.
+
+1.  Click the **Promptly (Puzzle Piece/Bulb)** icon in your browser toolbar.
+2.  **Select Provider**: Choose your preferred AI backend (e.g., Gemini, Claude, OpenAI).
+3.  **Enter API Key**:
+    -   **Gemini**: [Get Key](https://aistudio.google.com/app/apikey)
+    -   **Claude**: [Get Key](https://console.anthropic.com/)
+    -   **OpenAI**: [Get Key](https://platform.openai.com/api-keys)
+    -   *Default*: Uses a free tier via OpenRouter (no key needed, but rate limited).
+4.  Click **"Save Settings"**.
+
+> **Note**: Your keys are saved securely in `chrome.storage.local`.
+
+## 🎮 Usage
+
+1.  **Go to your favorite Chatbot**:
+    -   [ChatGPT](https://chatgpt.com)
+    -   [Claude.ai](https://claude.ai)
+    -   [Google Gemini](https://gemini.google.com)
+
+2.  **Type a Draft**:
+    > "Write a python script for snake game"
+
+3.  **Click Optimize**:
+    -   Click the small **Lightbulb Icon** 💡 located near the send button.
+    -   *Wait a second...* ✨
+
+4.  **Send**:
+    -   Your simple text is instantly replaced with a professional, detailed prompt engineering masterpiece.
+    -   Hit Enter and enjoy better results!
+
+## 🔧 Development
+
+Want to contribute? Great! Here is how to add a new AI provider.
+
+### Project Structure
+-   `manifest.json`: Extension configuration (Manifest V3).
+-   `content.js`: Logic for ChatGPT.
+-   `claude-content.js`: Logic for Claude.
+-   `gemini-content.js`: Logic for Gemini.
+-   `background.js`: Handles API requests (cors by-pass).
+-   `popup.*`: The settings menu.
+
+### Adding a Provider
+1.  **Update UI**: Add option to `popup.html`.
+2.  **Handle Key**: Update `popup.js` to save the new key.
+3.  **Implement API Call**:
+    -   Edit `background.js`.
+    -   Add a new function `callNewProvider(apiKey, prompt)`.
+    -   Add it to the switch case in `handleOptimizePrompt`.
+
+## 🛡️ Privacy & Security
+
+-   **No Analytics**: We do not track your usage.
+-   **Local Storage**: API Keys are stored locally on your device.
+-   **Direct Connections**: Requests go directly from your browser to the AI Provider (Google/Anthropic/OpenAI). We do not proxy your data.
+
+## 🤝 Contributing
+
+Contributions, issues, and feature requests are welcome!
+Feel free to check the [issues page](https://github.com/praneethreddie/promptly-extension-/issues).
+
+## 📄 License
+
+Distributed under the MIT License. See `LICENSE` for more information.
+
+---
+
+<div align="center">
+  <b>Built with ❤️ by <a href="https://github.com/praneethreddie">Praneeth Reddie</a></b>
+</div>
