@@ -155,7 +155,7 @@ const observer = new MutationObserver(() => {
         if (originalText && originalText.trim().length > 0) {
           console.log("Sending text for optimization:", originalText);
 
-          hiveButton.style.cursor = "wait";
+          promptlyButton.style.cursor = "wait";
 
           chrome.runtime.sendMessage({ action: "optimize_prompt", text: originalText }, (response) => {
             promptlyButton.style.cursor = "pointer";

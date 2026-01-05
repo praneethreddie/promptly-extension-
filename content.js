@@ -130,7 +130,7 @@ const observer = new MutationObserver(() => {
             if (originalText && originalText.trim().length > 0) {
               console.log("Sending text for optimization:", originalText);
 
-              hiveButton.style.cursor = "wait";
+              promptlyButton.style.cursor = "wait";
 
               try {
                 if (!chrome.runtime?.id) {
